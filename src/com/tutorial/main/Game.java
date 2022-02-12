@@ -7,12 +7,22 @@ import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3656499938345829548L;
 	public static final int WIDTH=640, HEIGHT = WIDTH / 12 * 9;
 	private Thread thread;
 	private boolean running = false;
+
+	private Handler handler;
 	
 	public Game() {
 		new Window(WIDTH,HEIGHT,"Let's Build a Game", this);
+		handler = new Handler();
+		handler.addObject(new Player(100,100, ID.Player));
+		
+
 	}
 	
 	public synchronized void start(){
@@ -28,7 +38,7 @@ public class Game extends Canvas implements Runnable{
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		thread.start();
+//		thread.start();
 	}
 	
 	public void run() {
@@ -57,11 +67,11 @@ public class Game extends Canvas implements Runnable{
 				frames = 0;
 			}
 		}
-		stop();	
+//		stop();	
 	}
 	
 	private void tick() {
-		
+		handler.tick();
 	}
 	
 	
@@ -76,6 +86,8 @@ public class Game extends Canvas implements Runnable{
 		
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
+
+		handler.render(g);
 		
 		g.dispose();
 		bs.show();
