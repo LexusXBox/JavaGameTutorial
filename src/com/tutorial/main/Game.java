@@ -18,11 +18,11 @@ public class Game extends Canvas implements Runnable{
 	private Handler handler;
 	
 	public Game() {
-		new Window(WIDTH,HEIGHT,"Let's Build a Game", this);
 		handler = new Handler();
-		handler.addObject(new Player(100,100, ID.Player));
-		
+		new Window(WIDTH,HEIGHT,"Let's Build a Game", this);
 
+		handler.addObject(new Player(100,100, ID.Player));
+	
 	}
 	
 	public synchronized void start(){
