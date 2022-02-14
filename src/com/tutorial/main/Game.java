@@ -5,23 +5,30 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import com.studiohartman.jamepad.ControllerManager;
+import com.studiohartman.jamepad.ControllerState;
+
+
 public class Game extends Canvas implements Runnable{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3656499938345829548L;
-	public static final int WIDTH=640, HEIGHT = WIDTH / 12 * 9;
+	public static final int WIDTH = 640, HEIGHT = WIDTH / 12 * 9;
 	private Thread thread;
 	private boolean running = false;
 
 	private Handler handler;
 	
 	public Game() {
+		
 		handler = new Handler();
+		ControllerInput controllers = new ControllerInput();
+		this.addKeyListener(new KeyInput(handler));
 		new Window(WIDTH,HEIGHT,"Let's Build a Game", this);
 
-		handler.addObject(new Player(100,100, ID.Player));
+		handler.addObject(new Player(WIDTH/2-32, HEIGHT/2-32, ID.Player));
 	
 	}
 	
@@ -38,7 +45,6 @@ public class Game extends Canvas implements Runnable{
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-//		thread.start();
 	}
 	
 	public void run() {
@@ -63,11 +69,9 @@ public class Game extends Canvas implements Runnable{
 		
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-				System.out.println("fps: " + frames);
 				frames = 0;
 			}
 		}
-//		stop();	
 	}
 	
 	private void tick() {
